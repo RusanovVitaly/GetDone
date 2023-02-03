@@ -1,4 +1,4 @@
-export interface IFormFields{
+export interface IUserCredentials {
     login:string,
     password:string
 }
@@ -9,5 +9,5 @@ interface LoginResponse {
 }
 
 export interface ILoginForm {
-    onFormSubmit(values:IFormFields):Promise<LoginResponse>
+    onFormSubmit(values: IUserCredentials):Promise<LoginResponse>
 }

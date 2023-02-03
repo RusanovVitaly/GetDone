@@ -2,13 +2,13 @@ import React from "react";
 import BasicLayout from "../../components/basicLayout";
 import { Box, Center, Heading, VStack } from "@chakra-ui/react";
 import LoginForm from "../../components/loginForm";
-import { IFormFields } from "../../components/loginForm/types";
+import { IUserCredentials } from "../../components/loginForm/types";
 import client from "../../services/pocketbase";
 import { redirect } from "react-router-dom";
 import status from "http-status";
 
 const LoginPage: React.FC = () => {
-  const onLogin = async (values: IFormFields) => {
+  const onLogin = async (values: IUserCredentials) => {
     // authWithPassword автоматически кладет данные о пользователе в local storage, даже имя и id
     // https://pocketbase.io/docs/authentication
     return client
