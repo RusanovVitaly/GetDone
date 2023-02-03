@@ -25,17 +25,18 @@ const getMessageByStatus = (e: ClientResponseError) => {
   }
 };
 
+const redirectToDashboard = () => {
+  redirect("/");
+  return { success: true };
+};
+
 const LoginPage: React.FC = () => {
   const onLogin = async (values: IUserCredentials) => {
-    try {
-      await client
-        .collection("users")
-        .authWithPassword(values.login, values.password);
-      redirect("/");
-      return { success: true };
-    } catch (e) {
-      return getMessageByStatus(e);
-    }
+    await client
+      .collection("users")
+      .authWithPassword(values.login, values.password)
+      .then(redirectToDashboard)
+      .catch(getMessageByStatus);
   };
 
   return (
