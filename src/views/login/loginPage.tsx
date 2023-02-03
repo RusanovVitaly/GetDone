@@ -5,21 +5,35 @@ import LoginForm from "../../components/loginForm";
 import { IFormFields } from "../../components/loginForm/types";
 import client from "../../services/pocketbase";
 import { redirect } from "react-router-dom";
+import status from "http-status";
 
 const LoginPage: React.FC = () => {
   const onLogin = async (values: IFormFields) => {
-    // authWithPassword автоматически кладет данные о пользователе в local storage
+    // authWithPassword автоматически кладет данные о пользователе в local storage, даже имя и id
     // https://pocketbase.io/docs/authentication
-    client
+    return client
       .collection("users")
       .authWithPassword(values.login, values.password)
       .then(() => {
         redirect("/");
       })
-      .finally(() => {
-        // stop loading
-      });
-    return { success: true };
+      .catch((e) => {
+        switch (e.status) {
+          case status.BAD_REQUEST: {        
+            return {
+              success: false,
+              message: "Неверный логин или пароль",
+            };
+          }
+          default: {
+            return {
+              success: false,
+              message: "Ошибка сервера, попробуйте снова",
+            };
+          }
+        }
+      })
+      .finally(() => ({ success: true }));
   };
   return (
     <BasicLayout>
