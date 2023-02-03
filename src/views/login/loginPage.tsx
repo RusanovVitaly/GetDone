@@ -16,10 +16,11 @@ const LoginPage: React.FC = () => {
       .authWithPassword(values.login, values.password)
       .then(() => {
         redirect("/");
+        return { success: true };
       })
       .catch((e) => {
         switch (e.status) {
-          case status.BAD_REQUEST: {        
+          case status.BAD_REQUEST: {
             return {
               success: false,
               message: "Неверный логин или пароль",
@@ -32,8 +33,7 @@ const LoginPage: React.FC = () => {
             };
           }
         }
-      })
-      .finally(() => ({ success: true }));
+      });
   };
   return (
     <BasicLayout>
