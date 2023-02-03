@@ -1,19 +1,19 @@
 import React from "react";
-import {Field, Form, Formik, FormikHandlers, FormikHelpers, FormikValues} from "formik";
+import {Field, Form, Formik, FormikHelpers, FormikValues} from "formik";
 import {Button, FormControl, FormErrorMessage, Input} from "@chakra-ui/react";
-import {IFormFields, ILoginForm} from "./types";
+import {IUserCredentials, ILoginForm} from "./types";
 
 
 export const LoginForm: React.FC<ILoginForm> = ({onFormSubmit}) => {
 
-    const initialValues: IFormFields = {
+    const initialValues: IUserCredentials = {
         login: "",
         password: ""
     }
 
-    const onFormSubmitHandler = async (values: FormikValues, actions: FormikHelpers<IFormFields>) => {
-        const result = await onFormSubmit(values as IFormFields);
-        if(result.success) actions.setSubmitting(false);
+    const onFormSubmitHandler = async (values: FormikValues, actions: FormikHelpers<IUserCredentials>) => {
+        const result = await onFormSubmit(values as IUserCredentials);
+        if (!result.success) actions.setSubmitting(false);
     }
 
     return (
